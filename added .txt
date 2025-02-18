@@ -4,4 +4,4 @@ large screen hote hi double double sidebar visible ho rhi thi
 so isko inspect krke theek kiya
 
 
-and added image upload limit
+and added image upload limit wanted to limit to 5mb but not able to do so 
