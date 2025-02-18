@@ -8,6 +8,8 @@ export const useChatStore = create((set, get) => ({
     selectedUser: null,
     isUsersLoading: false,
     isMessagesLoading: false,
+    isSidebarVisible: true,
+
 
     getUsers: async () => {
 
@@ -40,7 +42,7 @@ export const useChatStore = create((set, get) => ({
 
             set({ messages: [...messages, res.data] });
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error("Image should be less than 70KB");
         }
     },
     subscribeToMessages: async (userId) => {
@@ -61,4 +63,6 @@ export const useChatStore = create((set, get) => ({
     setSelectedUser: (selectedUser) => {
         set({ selectedUser });
     },
+    toggleSidebar: () => set((state) => ({ isSidebarVisible: !state.isSidebarVisible }))
+
 }));

@@ -1,24 +1,30 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { Camera, Mail, User } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 export const ProfilePage = () => {
     const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
     const [selectedImg, setSelectedImg] = useState(null);
-
+    // console.log("beforeimageupload")
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
+        if (file.size > 5 * 1024 * 1024) {
+            return toast.error("File size should be less than 5MB");
+
+        }
 
         const reader = new FileReader();
-
+        // this below method is throwing error while uploading large image
         reader.readAsDataURL(file);
-
+        // console.log("before renderonload")
         reader.onload = async () => {
             const base64Image = reader.result;
             setSelectedImg(base64Image);
             await updateProfile({ profilePic: base64Image });
         };
+        // console.log("afterrender.onload")
     };
 
     return (

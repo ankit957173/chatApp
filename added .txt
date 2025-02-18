@@ -1,0 +1,7 @@
+in smaller screens image input is hidden
+and in smaller screens toggle is there and this is also very heptic task
+large screen hote hi double double sidebar visible ho rhi thi 
+so isko inspect krke theek kiya
+
+
+and added image upload limit

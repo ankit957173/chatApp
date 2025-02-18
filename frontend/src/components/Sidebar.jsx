@@ -5,8 +5,7 @@ import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import { Users } from "lucide-react";
 
 const Sidebar = () => {
-    const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } = useChatStore();
-
+    const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading, toggleSidebar, isSidebarVisible } = useChatStore();
     const { onlineUsers } = useAuthStore();
     const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
@@ -21,13 +20,12 @@ const Sidebar = () => {
     if (isUsersLoading) return <SidebarSkeleton />;
 
     return (
-        <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
+        <aside className={`h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200 ${isSidebarVisible ? "visible" : "hidden"}`}>
             <div className="border-b border-base-300 w-full p-5">
                 <div className="flex items-center gap-2">
                     <Users className="size-6" />
                     <span className="font-medium hidden lg:block">Contacts</span>
                 </div>
-                {/* TODO: Online filter toggle */}
                 <div className="mt-3 hidden lg:flex items-center gap-2">
                     <label className="cursor-pointer flex items-center gap-2">
                         <input
@@ -46,7 +44,10 @@ const Sidebar = () => {
                 {filteredUsers.map((user) => (
                     <button
                         key={user._id}
-                        onClick={() => setSelectedUser(user)}
+                        onClick={() => {
+                            setSelectedUser(user);
+                            toggleSidebar();
+                        }}
                         className={`
               w-full p-3 flex items-center gap-3
               hover:bg-base-300 transition-colors
@@ -67,7 +68,6 @@ const Sidebar = () => {
                             )}
                         </div>
 
-                        {/* User info - only visible on larger screens */}
                         <div className="hidden lg:block text-left min-w-0">
                             <div className="font-medium truncate">{user.fullName}</div>
                             <div className="text-sm text-zinc-400">

@@ -69,8 +69,8 @@ export const useAuthStore = create((set, get) => ({
             toast.success("Profile updated successfully");
         }
         catch (error) {
-            console.log(error)
-            toast.error(error.response);
+            console.log("error in updateProfile: ", error);
+            toast.error("Image size should be less than 70KB");
         } finally {
             set({ isUpdatingProfile: false });
         }
@@ -80,7 +80,7 @@ export const useAuthStore = create((set, get) => ({
         if (!authUser || get().socket?.connected) return;
         const socket = io(BASE_URL, { query: { userId: authUser._id } });
         socket.connect();
-        set({ socket });
+        set({ socket: socket });
         socket.on("getOnlineUsers", (userIds) => {
             set({ onlineUsers: userIds });
         });
